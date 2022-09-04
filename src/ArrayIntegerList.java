@@ -21,7 +21,7 @@ public class ArrayIntegerList implements IntegerList {
 
     }
 
-    private void sort() {
+    private Integer[] sort() {
         Integer[] copy = toArray();
         for (int i = 1; i < copy.length; i++) {
             int temp = copy[i];
@@ -32,20 +32,21 @@ public class ArrayIntegerList implements IntegerList {
             }
             copy[j] = temp;
         }
+        return copy;
     }
 
-    private boolean binarySearch(int item) {
+    private boolean binarySearch(int item, Integer[] arr) {
         int min = 0;
-        int max = size - 1;
+        int max = arr.length - 1;
 
         while (min <= max) {
             int mid = (min + max) / 2;
 
-            if (item == elementData[mid]) {
+            if (item == arr[mid]) {
                 return true;
             }
 
-            if (item < elementData[mid]) {
+            if (item < arr[mid]) {
                 max = mid - 1;
             } else {
                 min = mid + 1;
@@ -130,8 +131,8 @@ public class ArrayIntegerList implements IntegerList {
     @Override
     public boolean contains(Integer item) {
         checkNull(item);
-        sort();
-        return binarySearch(item);
+        Integer[] arraySort = sort();
+        return binarySearch(item, arraySort);
     }
 
     @Override
