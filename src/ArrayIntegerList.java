@@ -22,14 +22,15 @@ public class ArrayIntegerList implements IntegerList {
     }
 
     private void sort() {
-        for (int i = 1; i < size; i++) {
-            int temp = elementData[i];
+        Integer[] copy = toArray();
+        for (int i = 1; i < copy.length; i++) {
+            int temp = copy[i];
             int j = i;
-            while (j > 0 && elementData[j - 1] >= temp) {
-                elementData[j] = elementData[j - 1];
+            while (j > 0 && copy[j - 1] >= temp) {
+                copy[j] = copy[j - 1];
                 j--;
             }
-            elementData[j] = temp;
+            copy[j] = temp;
         }
     }
 
