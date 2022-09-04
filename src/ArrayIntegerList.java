@@ -101,30 +101,24 @@ public class ArrayIntegerList implements IntegerList {
 
     @Override
     public Integer remove(Integer item) {
-        checkNull(item);
-        for (int i = 0; i < size; i++) {
-            if (elementData[i].equals(item)) {
-                System.arraycopy(elementData, i + 1, elementData, i, size - i - 1);
-                elementData[size - 1] = null;
-                size--;
-                return item;
-            }
+        int removeIndex = indexOf(item);
+        if (removeIndex == -1) {
+            throw new ValueNotFoundException("Элемент не найден");
         }
-        throw new ValueNotFoundException("Элемент не найден");
+        remove(removeIndex);
+        return item;
     }
 
     @Override
     public Integer remove(int index) {
-        for (int i = 0; i < size; i++) {
-            if (i == index) {
-                Integer oldValue = elementData[i];
-                System.arraycopy(elementData, i + 1, elementData, i, size - i - 1);
-                elementData[size - 1] = null;
-                size--;
-                return oldValue;
-            }
+        if (index < 0 || index >= size) {
+            throw new IndexNotFoundException("Индекс не найден");
         }
-        throw new IndexNotFoundException("Индекс не найден");
+        Integer oldValue = elementData[index];
+        System.arraycopy(elementData, index + 1, elementData, index, size - index - 1);
+        elementData[size - 1] = null;
+        size--;
+        return oldValue;
     }
 
 
