@@ -5,7 +5,9 @@ public class Main {
         int[] arr1 = generateRandomArray();
         int[] arr2 = Arrays.copyOf(arr1, arr1.length);
         int[] arr3 = Arrays.copyOf(arr1, arr1.length);
-        checkSortTime(arr1, arr2, arr3);
+        int[] arr4 = Arrays.copyOf(arr1, arr1.length);
+        int[] arr5 = Arrays.copyOf(arr1, arr1.length);
+        checkSortTime(arr1, arr2, arr3, arr4, arr5);
     }
 
     private static int[] generateRandomArray() {
@@ -58,7 +60,75 @@ public class Main {
 
     }
 
-    private static void checkSortTime(int[] arr1, int[] arr2, int[] arr3) {
+    public static void quickSort(int[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private static int partition(int[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    public static void mergeSort(int[] arr) {
+        if (arr.length < 2) {
+            return;
+        }
+        int mid = arr.length / 2;
+        int[] left = new int[mid];
+        int[] right = new int[arr.length - mid];
+
+        for (int i = 0; i < left.length; i++) {
+            left[i] = arr[i];
+        }
+
+        for (int i = 0; i < right.length; i++) {
+            right[i] = arr[mid + i];
+        }
+
+        mergeSort(left);
+        mergeSort(right);
+
+        merge(arr, left, right);
+    }
+
+    public static void merge(int[] arr, int[] left, int[] right) {
+
+        int mainP = 0;
+        int leftP = 0;
+        int rightP = 0;
+        while (leftP < left.length && rightP < right.length) {
+            if (left[leftP] <= right[rightP]) {
+                arr[mainP++] = left[leftP++];
+            } else {
+                arr[mainP++] = right[rightP++];
+            }
+        }
+        while (leftP < left.length) {
+            arr[mainP++] = left[leftP++];
+        }
+        while (rightP < right.length) {
+            arr[mainP++] = right[rightP++];
+        }
+    }
+
+
+    private static void checkSortTime(int[] arr1, int[] arr2, int[] arr3, int[] arr4, int[] arr5) {
         long start1 = System.currentTimeMillis();
         sortBubble(arr1);
         System.out.println("Пузырьковая сортировка ");
@@ -71,5 +141,14 @@ public class Main {
         sortInsertion(arr3);
         System.out.println("Сортировка вставкой");
         System.out.println(System.currentTimeMillis() - start3);
+        long start4 = System.currentTimeMillis();
+        mergeSort(arr4);
+        System.out.println("Сортировка слиянием");
+        System.out.println(System.currentTimeMillis() - start4);
+        long start5 = System.currentTimeMillis();
+        quickSort(arr5, arr5[0], arr5.length - 1);
+        System.out.println("Быстрая сортировка");
+        System.out.println(System.currentTimeMillis() - start5);
+
     }
 }
