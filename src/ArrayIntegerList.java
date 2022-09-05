@@ -16,7 +16,7 @@ public class ArrayIntegerList implements IntegerList {
 
     private Integer[] grow() {
         int oldCapacity = elementData.length;
-        int newCapacity = oldCapacity + (oldCapacity >> 1) + 1;
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
         return elementData = Arrays.copyOf(elementData, newCapacity);
 
     }
