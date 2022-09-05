@@ -21,6 +21,12 @@ public class ArrayIntegerList implements IntegerList {
 
     }
 
+    private void swapElements(Integer[] arr, int indexA, int indexB) {
+        int tmp = arr[indexA];
+        arr[indexA] = arr[indexB];
+        arr[indexB] = tmp;
+    }
+
     private Integer[] sort() {
         Integer[] copy = toArray();
         for (int i = 1; i < copy.length; i++) {
@@ -34,46 +40,29 @@ public class ArrayIntegerList implements IntegerList {
         }
         return copy;
     }
-    private void mergeSort(Integer[] arr) {
-        if (arr.length < 2) {
-            return;
+
+    private void quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
         }
-        int mid = arr.length / 2;
-        Integer[] left = new Integer[mid];
-        Integer[] right = new Integer[arr.length - mid];
-
-        for (int i = 0; i < left.length; i++) {
-            left[i] = arr[i];
-        }
-
-        for (int i = 0; i < right.length; i++) {
-            right[i] = arr[mid + i];
-        }
-
-        mergeSort(left);
-        mergeSort(right);
-
-        merge(arr, left, right);
     }
 
-    private void merge(Integer[] arr, Integer[] left, Integer[] right) {
+    private int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
 
-        int mainP = 0;
-        int leftP = 0;
-        int rightP = 0;
-        while (leftP < left.length && rightP < right.length) {
-            if (left[leftP] <= right[rightP]) {
-                arr[mainP++] = left[leftP++];
-            } else {
-                arr[mainP++] = right[rightP++];
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
             }
         }
-        while (leftP < left.length) {
-            arr[mainP++] = left[leftP++];
-        }
-        while (rightP < right.length) {
-            arr[mainP++] = right[rightP++];
-        }
+        swapElements(arr, i + 1, end);
+        return i + 1;
     }
 
     private boolean binarySearch(int item, Integer[] arr) {
@@ -167,7 +156,7 @@ public class ArrayIntegerList implements IntegerList {
     public boolean contains(Integer item) {
         checkNull(item);
         Integer[] arr = toArray();
-        mergeSort(arr);
+        quickSort(arr, 0, arr.length - 1);
         return binarySearch(item, arr);
     }
 

@@ -146,7 +146,7 @@ public class Main {
         System.out.println("Сортировка слиянием");
         System.out.println(System.currentTimeMillis() - start4);
         long start5 = System.currentTimeMillis();
-        quickSort(arr5, arr5[0], arr5.length - 1);
+        quickSort(arr5, 0, arr5.length - 1);
         System.out.println("Быстрая сортировка");
         System.out.println(System.currentTimeMillis() - start5);
 
