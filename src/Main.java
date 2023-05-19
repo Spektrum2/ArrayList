@@ -1,5 +1,7 @@
 import java.util.Arrays;
 
+import static java.lang.System.currentTimeMillis;
+
 public class Main {
     public static void main(String[] args) {
         int[] arr1 = generateRandomArray();
@@ -71,7 +73,7 @@ public class Main {
 
     private static int partition(int[] arr, int begin, int end) {
         int pivot = arr[end];
-        int i = (begin - 1);
+        int i = begin - 1;
 
         for (int j = begin; j < end; j++) {
             if (arr[j] <= pivot) {
@@ -129,26 +131,26 @@ public class Main {
 
 
     private static void checkSortTime(int[] arr1, int[] arr2, int[] arr3, int[] arr4, int[] arr5) {
-        long start1 = System.currentTimeMillis();
+        long start1 = currentTimeMillis();
         sortBubble(arr1);
         System.out.println("Пузырьковая сортировка ");
-        System.out.println(System.currentTimeMillis() - start1);
-        long start2 = System.currentTimeMillis();
+        System.out.println(currentTimeMillis() - start1);
+        long start2 = currentTimeMillis();
         sortSelection(arr2);
         System.out.println("Сортировка выбором");
-        System.out.println(System.currentTimeMillis() - start2);
-        long start3 = System.currentTimeMillis();
+        System.out.println(currentTimeMillis() - start2);
+        long start3 = currentTimeMillis();
         sortInsertion(arr3);
         System.out.println("Сортировка вставкой");
-        System.out.println(System.currentTimeMillis() - start3);
-        long start4 = System.currentTimeMillis();
+        System.out.println(currentTimeMillis() - start3);
+        long start4 = currentTimeMillis();
         mergeSort(arr4);
         System.out.println("Сортировка слиянием");
-        System.out.println(System.currentTimeMillis() - start4);
-        long start5 = System.currentTimeMillis();
+        System.out.println(currentTimeMillis() - start4);
+        long start5 = currentTimeMillis();
         quickSort(arr5, 0, arr5.length - 1);
         System.out.println("Быстрая сортировка");
-        System.out.println(System.currentTimeMillis() - start5);
+        System. out.println(currentTimeMillis() - start5);
 
     }
 }

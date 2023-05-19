@@ -190,18 +190,15 @@ public class ArrayIntegerList implements IntegerList {
 
     @Override
     public boolean equals(StringList otherList) {
-        boolean equal = size == otherList.size();
-        if (equal) {
-            final Object[] otherEs = otherList.toArray();
-            final Object[] es = elementData;
-            for (int i = 0; i < size; i++) {
-                if (!Objects.equals(es[i], otherEs[i])) {
-                    equal = false;
-                    break;
-                }
+        if(otherList == null || size() != otherList.size()){
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if(!get(i).equals(otherList.get(i))){
+                return false;
             }
         }
-        return equal;
+        return true;
     }
 
     @Override
